@@ -1,10 +1,10 @@
-# SOFTS with DINOv3 Backbone: Thay thế STAR Encoder bằng DINOv3 cho Dự báo Chuỗi thời gian Đa biến
+# SOFTS with DINO-v3 Backbone: Thay thế STAR Encoder bằng DINO-v3 cho dự báo chuỗi thời gian đa biến
 
-Dự án này thực hiện cải tiến kiến trúc mô hình từ bài báo **[SOFTS: Efficient Multivariate Time Series Forecasting with Series-Core Fusion (NeurIPS 2024)](https://github.com/Secilia-Cxy/SOFTS)** bằng cách thay thế bộ mã hóa (Encoder/Backbone) nguyên bản bằng mô hình thị giác nền tảng **DINOv3** (`vit_small_patch16_dinov3.lvd1689m`).
+Dự án này thực hiện cải tiến kiến trúc mô hình từ bài báo **[SOFTS: Efficient Multivariate Time Series Forecasting with Series-Core Fusion (NeurIPS 2024)](https://github.com/Secilia-Cxy/SOFTS)** bằng cách thay thế bộ mã hóa (Encoder/Backbone) nguyên bản bằng mô hình thị giác nền tảng **DINO-v3** (`vit_small_patch16_dinov3.lvd1689m`).
 
 ---
 
-## 🔍 Điểm cốt lõi: Chúng tôi đã thay thế những gì? (Architecture Comparison)
+## 🔍 Điểm cốt lõi: Chúng tôi đã thay thế những gì?
 
 Theo **Algorithm 1** trong bài báo gốc, mô hình SOFTS bao gồm 4 giai đoạn:
 1. **Chuẩn hóa thuận nghịch (RevIN):** Chuẩn hóa chuỗi đầu vào $X \in \mathbb{R}^{L \times C}$ về trung bình bằng 0, phương sai bằng 1 và đảo chiều ma trận thành $X \in \mathbb{R}^{C \times L}$[cite: 2].
@@ -15,7 +15,7 @@ Theo **Algorithm 1** trong bài báo gốc, mô hình SOFTS bao gồm 4 giai đo
 ### 🔄 Sự thay đổi trong dự án này (Giải quyết hạn chế ở Appendix F của bài báo)
 Trong **Appendix F (Limitations and Future Works)** của bài báo gốc, nhóm tác giả chỉ ra rằng hiệu quả của SOFTS phụ thuộc chặt chẽ vào chất lượng của *Global Core Representation* và đề xuất hướng nghiên cứu thay thế chiến lược *Aggregate-Redistribute* của STAR[cite: 2]. 
 
-Chúng tôi đã can thiệp trực tiếp vào file **`models/SOFTS.py`** để thay thế **Module STAR Encoder** bằng **`DINOv3BackboneEncoder`**:
+Chúng tôi đã can thiệp trực tiếp vào file **`models/SOFTS.py`** để thay thế **Module STAR Encoder** bằng **`DINO-v3BackboneEncoder`**:
 
 | Thành phần kiến trúc | SOFTS Nguyên bản (`Secilia-Cxy/SOFTS`)[cite: 2] | SOFTS + DINOv3 (Bản cập nhật của chúng tôi) |
 | :--- | :--- | :--- |
@@ -27,9 +27,9 @@ Chúng tôi đã can thiệp trực tiếp vào file **`models/SOFTS.py`** để
 
 ---
 
-## 🛠️ Chi tiết Code đã Cập nhật (File-by-File Code Changes)
+## 🛠️ Chi tiết code đã cập nhật
 
-### 1. File `models/SOFTS.py` (Trọng tâm cập nhật)
+### 1. File `models/SOFTS.py`
 * **Loại bỏ:** Toàn bộ class `STAR` và kiến trúc `Encoder` / `EncoderLayer` dựa trên MLP nguyên bản[cite: 2].
 * **Thêm mới class `DINOv3BackboneEncoder(nn.Module)`:**
   ```python
@@ -71,7 +71,7 @@ dec_out = self.projection(s_n).permute(0, 2, 1)
 
 Dòng 54 (EarlyStopping.__init__): Cập nhật self.val_loss_min = np.Inf $\rightarrow$ self.val_loss_min = np.inf để tương thích với phiên bản NumPy >= 2.0.
 
-# 🚀 Hướng dẫn Cài đặt & Chạy Thực nghiệm
+# 🚀 Hướng dẫn cài đặt và chạy thực nghiệm
 1. Cài đặt thư viện
 Ngoài các thư viện cơ bản của SOFTS (torch, numpy, pandas, scikit-learn), cần cài đặt thêm timm để tải trọng số DINOv3:
 pip install torch numpy pandas scikit-learn tqdm matplotlib einops patool timm transformers
