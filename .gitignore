@@ -158,3 +158,8 @@ data_loader_all.py
 /utils/self_tools.py
 /scripts/exp_scripts/
 .idea/deployment.xml
+# Bo qua moi truong ao va cac file cua Qua trinh 1
+venv/
+dataset/
+collect_crypto_data.py
+models/SOFTS_backup.py
