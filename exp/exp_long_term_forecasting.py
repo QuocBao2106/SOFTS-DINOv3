@@ -177,9 +177,6 @@ class Exp_Long_Term_Forecast(Exp_Basic):
 
         best_model_path = path + '/' + 'checkpoint.pth'
         self.model.load_state_dict(torch.load(best_model_path))
-        if not self.args.save_model:
-            import shutil
-            shutil.rmtree(path)
         return self.model
 
     def test(self, setting, test=0):
