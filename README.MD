@@ -66,7 +66,12 @@ s_n = self.encoder(x_transposed, s_0)
 
 # Bước 3: Dự báo qua Linear Predictor
 dec_out = self.projection(s_n).permute(0, 2, 1)
-2. File utils/tools.py (Bản vá tương thích môi trường)Dòng 54 (EarlyStopping.__init__): Cập nhật self.val_loss_min = np.Inf $\rightarrow$ self.val_loss_min = np.inf để tương thích với phiên bản NumPy >= 2.0.🚀 Hướng dẫn Cài đặt & Chạy Thực nghiệm
+
+# 2. File utils/tools.py (Bản vá tương thích môi trường)
+
+Dòng 54 (EarlyStopping.__init__): Cập nhật self.val_loss_min = np.Inf $\rightarrow$ self.val_loss_min = np.inf để tương thích với phiên bản NumPy >= 2.0.
+
+# 🚀 Hướng dẫn Cài đặt & Chạy Thực nghiệm
 1. Cài đặt thư viện
 Ngoài các thư viện cơ bản của SOFTS (torch, numpy, pandas, scikit-learn), cần cài đặt thêm timm để tải trọng số DINOv3:
 pip install torch numpy pandas scikit-learn tqdm matplotlib einops patool timm transformers
@@ -94,9 +99,8 @@ python run.py \
   --train_epochs 10 \
   --patience 3 \
   --num_workers 0
-📚 Tài liệu tham khảo (References)
+
+
+# 📚 Tài liệu tham khảo (References)
 SOFTS Original Paper: Lu Han, Xu-Yang Chen, Han-Jia Ye, De-Chuan Zhan. "SOFTS: Efficient Multivariate Time Series Forecasting with Series-Core Fusion." NeurIPS 2024[cite: 2].
-
-Original Repository: https://github.com/Secilia-Cxy/SOFTS
-
-[cite: 2]
+Original Repository: https://github.com/Secilia-Cxy/SOFTS [cite: 2]
