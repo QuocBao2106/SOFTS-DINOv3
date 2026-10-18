@@ -65,7 +65,7 @@ with st.sidebar:
     # Thanh menu mục lục dạng selectbox hoặc radio cao cấp
     menu_selection = st.selectbox(
         "📌 **Điều hướng hệ thống**",
-        ["📊 Dashboard Tổng quan", "🚀 Chạy Dự báo AI", "⚙️ Cấu hình Mô hình", "📖 Tài liệu & Hướng dẫn"]
+        ["📊 Dashboard tổng quan", "🚀 Chạy dự báo AI", "⚙️ Cấu hình mô hình", "📖 Tài liệu và hướng dẫn"]
     )
     
     st.markdown("---")
@@ -127,11 +127,11 @@ with col_top2:
 st.markdown("---")
 
 # Điều hướng hiển thị theo Menu mục lục bên Sidebar
-if menu_selection == "📊 Dashboard Tổng quan":
+if menu_selection == "📊 Dashboard tổng quan":
     # Các thẻ Cards thông số tổng quan (Metrics Cards)
     c1, c2, c3, c4 = st.columns(4)
     with c1:
-        st.markdown("<div class='metric-card'><h4>📦 Tổng số Kênh (C)</h4><h2>150 Assets</h2><p style='color: #10b981;'>+12% tuần này</p></div>", unsafe_allow_html=True)
+        st.markdown("<div class='metric-card'><h4>📦 Tổng số kênh (C)</h4><h2>150 Assets</h2><p style='color: #10b981;'>+12% tuần này</p></div>", unsafe_allow_html=True)
     with c2:
         st.markdown("<div class='metric-card'><h4>⏱️ Cửa sổ nhìn lại (L)</h4><h2>96 Hours</h2><p style='color: #3b82f6;'>Chuẩn tiêu chuẩn</p></div>", unsafe_allow_html=True)
     with c3:
@@ -140,10 +140,10 @@ if menu_selection == "📊 Dashboard Tổng quan":
         st.markdown("<div class='metric-card'><h4>⚡ Hiệu năng MSE</h4><h2>0.0653</h2><p style='color: #10b981;'>Tối ưu qua DINOv3</p></div>", unsafe_allow_html=True)
 
     st.markdown("<br>", unsafe_allow_html=True)
-    st.info("💡 **Gợi ý:** Hãy chuyển sang mục **'🚀 Chạy Dự báo AI'** ở thanh menu bên trái để tải lên dữ liệu CSV của bạn và trực quan hóa kết quả dự báo.")
+    st.info("💡 **Gợi ý:** Hãy chuyển sang mục **'🚀 Chạy dự báo AI'** ở thanh menu bên trái để tải lên dữ liệu CSV của bạn và trực quan hóa kết quả dự báo.")
 
-elif menu_selection == "🚀 Chạy Dự báo AI":
-    st.markdown("### 📂 Tải lên Dữ liệu & Cấu hình Phân tích")
+elif menu_selection == "🚀 Chạy dự báo AI":
+    st.markdown("### 📂 Tải lên dữ liệu & Cấu hình phân tích")
     
     col_upload, col_settings = st.columns([2, 1])
     with col_upload:
@@ -161,8 +161,8 @@ elif menu_selection == "🚀 Chạy Dự báo AI":
         columns = [col for col in df.columns if col != 'date']
         target_col = st.selectbox("📌 Chọn đồng coin/kênh mục tiêu để phân tích:", columns, index=len(columns)-1)
 
-        if st.button("🚀 Thực thi Dự báo AI ngay"):
-            with st.spinner("Đang trích xuất đặc trưng qua DINOv3 Backbone & chạy mô hình SOFTS..."):
+        if st.button("🚀 Thực thi dự báo AI ngay"):
+            with st.spinner("Đang trích xuất đặc trưng qua DINOv3 Backbone và chạy mô hình SOFTS..."):
                 try:
                     data_values = df[columns].values[-96:]
                     x_enc = torch.tensor(data_values, dtype=torch.float32).unsqueeze(0)
@@ -179,7 +179,7 @@ elif menu_selection == "🚀 Chạy Dự báo AI":
                     st.success("✨ Dự báo hoàn tất thành công!")
                     
                     # Khu vực hiển thị biểu đồ giao diện tối màu chuyên nghiệp
-                    st.markdown(f"### 📈 Biểu đồ Phân tích & Dự báo: `{target_col}`")
+                    st.markdown(f"### 📈 Biểu đồ phân tích và dự báo: `{target_col}`")
                     
                     fig, ax = plt.subplots(figsize=(12, 5))
                     # Tùy chỉnh style biểu đồ hợp với Dark Mode
@@ -209,8 +209,8 @@ elif menu_selection == "🚀 Chạy Dự báo AI":
     else:
         st.info("💡 Vui lòng tải lên file dữ liệu `.csv` (ví dụ file `crypto_softs.csv`) để bắt đầu.")
 
-elif menu_selection == "⚙️ Cấu hình Mô hình":
-    st.markdown("### ⚙️ Thông số Kiến trúc Hệ thống")
+elif menu_selection == "⚙️ Cấu hình mô hình":
+    st.markdown("### ⚙️ Thông số kiến trúc hệ thống")
     st.json({
         "Model Backbone": "DINOv3 ViT-Small (vit_small_patch16_dinov3.lvd1689m)",
         "Time-Series Core": "SOFTS STAR Architecture",
@@ -220,10 +220,10 @@ elif menu_selection == "⚙️ Cấu hình Mô hình":
         "Lookback Window (L)": 96
     })
 
-elif menu_selection == "📖 Tài liệu & Hướng dẫn":
-    st.markdown("### 📖 Tài liệu Hướng dẫn Sử dụng Hệ thống")
+elif menu_selection == "📖 Tài liệu và hướng dẫn":
+    st.markdown("### 📖 Tài liệu hướng dẫn sử dụng hệ thống")
     st.markdown("""
     - **Bước 1:** Chuẩn bị file dữ liệu chuỗi thời gian định dạng `.csv` có cột `date` và các cột kênh dữ liệu.
-    - **Bước 2:** Truy cập mục **Chạy Dự báo AI**, tải file lên hệ thống.
+    - **Bước 2:** Truy cập mục **Chạy dự báo AI**, tải file lên hệ thống.
     - **Bước 3:** Lựa chọn đồng coin mục tiêu và nhấn nút thực thi để nhận biểu đồ trực quan từ mô hình học sâu.
     """)
